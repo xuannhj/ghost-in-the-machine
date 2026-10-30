@@ -18,7 +18,7 @@ import { soundService } from '../services/soundService';
 
 export default function GhostTerminal({ apiKey, lang }) {
   const [selectedModel, setSelectedModel] = useState('gemma2-9b-it');
-  const [selectedMood, setSelectedMood] = useState('cyber');
+  const [selectedMood, setSelectedMood] = useState('pumpkin');
   const [isLoading, setIsLoading] = useState(false);
   const [storyData, setStoryData] = useState({
     title: lang === 'vi' ? 'Sẵn Sàng Triệu Hồi...' : 'Awaiting Summoning...',
@@ -77,12 +77,16 @@ export default function GhostTerminal({ apiKey, lang }) {
 
       setStoryData(result);
 
-      // Trigger spooky blood-red confetti burst
+      // Trigger spooky blood-red & pumpkin orange confetti burst
+      const confettiColors = selectedMood === 'pumpkin'
+        ? ['#f97316', '#ea580c', '#ef4444', '#15803d', '#78350f']
+        : ['#ef4444', '#7f1d1d', '#a855f7', '#000000'];
+
       confetti({
-        particleCount: 50,
-        spread: 70,
+        particleCount: 60,
+        spread: 80,
         origin: { y: 0.75 },
-        colors: ['#ef4444', '#7f1d1d', '#a855f7', '#000000']
+        colors: confettiColors
       });
     } catch (err) {
       console.error(err);

@@ -18,15 +18,16 @@ export default function SpookyBackground() {
     };
     window.addEventListener('resize', handleResize);
 
-    // Particles: floating cursed embers & cyber sparks
-    const particles = Array.from({ length: 45 }, () => ({
+    // Particles: floating cursed embers, pumpkin sparks & cyber glow
+    const colors = ['rgba(249, 115, 22,', 'rgba(239, 68, 68,', 'rgba(168, 85, 247,'];
+    const particles = Array.from({ length: 50 }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      size: Math.random() * 2.5 + 0.5,
+      size: Math.random() * 2.8 + 0.6,
       speedX: (Math.random() - 0.5) * 0.4,
       speedY: -(Math.random() * 0.7 + 0.2), // float upwards
-      opacity: Math.random() * 0.6 + 0.1,
-      color: Math.random() > 0.4 ? 'rgba(239, 68, 68,' : 'rgba(168, 85, 247,' // Red or Purple
+      opacity: Math.random() * 0.6 + 0.15,
+      color: colors[Math.floor(Math.random() * colors.length)]
     }));
 
     const render = () => {
@@ -57,8 +58,8 @@ export default function SpookyBackground() {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `${p.color} ${p.opacity})`;
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = p.color === 'rgba(239, 68, 68,' ? '#ef4444' : '#a855f7';
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = p.color.includes('249') ? '#f97316' : (p.color.includes('239') ? '#ef4444' : '#a855f7');
         ctx.fill();
       });
 

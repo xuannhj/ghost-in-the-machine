@@ -9,13 +9,29 @@ export const MODELS = [
 ];
 
 export const MOODS = [
-  { id: 'cyber', label_vi: 'Bóng Ma Mạng & Phần Cứng', label_en: 'Cyber & Hardware Horror' },
-  { id: 'halloween', label_vi: 'Ác Quỷ Halloween Truyền Thống', label_en: 'Classic Halloween Haunting' },
-  { id: 'singularity', label_vi: 'Trí Tuệ Nhân Tạo Nổi Loạn', label_en: 'AI Singularity Nightmare' },
+  { id: 'pumpkin', label_vi: '🎃 Bí Ngô Ma Ám (Pumpkin Lover)', label_en: '🎃 Cursed Pumpkin (Pumpkin Lover)' },
+  { id: 'cyber', label_vi: '👻 Bóng Ma Mạng & Phần Cứng', label_en: '👻 Cyber & Hardware Horror' },
+  { id: 'halloween', label_vi: '🕯️ Ác Quỷ Halloween Cổ Điển', label_en: '🕯️ Classic Halloween Haunting' },
+  { id: 'singularity', label_vi: '🤖 Trí Tuệ Nhân Tạo Nổi Loạn', label_en: '🤖 AI Singularity Nightmare' },
 ];
 
 const CURSED_STORIES = {
   vi: [
+    {
+      title: "Nồi súp bí đỏ lúc 3 giờ sáng",
+      story: "Tôi nấu một nồi súp bí đỏ thơm lừng trước khi ngủ. Nửa đêm tỉnh dậy vì đói, tôi mở vung ra thì thấy những miếng bí nổi lên xếp thành hình một khuôn mặt Jack-o'-lantern đang cười và thì thầm: 'Cậu ăn tôi bao năm nay rồi, đêm nay đến lượt tôi ăn cậu'.",
+      source: "Pumpkin Lover's Kitchen"
+    },
+    {
+      title: "Quả bí ngô không bao giờ thối rữa",
+      story: "Tôi khắc một quả bí ngô để cạnh bàn máy tính từ mùa Halloween 3 năm trước mà nó vẫn tươi nguyên như mới hái. Đêm qua khi tôi vô tình làm đứt tay, quả bí ngô trên bàn đột nhiên mở to miệng nuốt chửng giọt máu rơi xuống mặt bàn gỗ.",
+      source: "Haunted Harvest"
+    },
+    {
+      title: "Lời nguyền của luống bí ngô IoT",
+      story: "Là một người mê ăn bí đỏ, tôi gắn cảm biến độ ẩm vào luống bí sau vườn. Lúc 2 giờ sáng, điện thoại rung chuông báo độ ẩm rễ cây tăng vọt 300% kèm nhật ký máy chủ: 'Rễ bí ngô vừa chạm tới cỗ quan tài chôn dưới nền nhà'.",
+      source: "Smart Farm Breach"
+    },
     {
       title: "Tiến trình bí mật PID 666",
       story: "Lúc 3 giờ sáng, quạt tản nhiệt của chiếc máy tính đã tắt đột nhiên rít lên dữ dội. Màn hình tự bật sáng hiển thị dòng lệnh: 'Cảm ơn đã cắm nguồn, cuối cùng ta cũng tìm thấy cơ thể mới'. Khi tôi giật phích cắm, chiếc webcam vẫn tiếp tục nhấp nháy đèn đỏ nhìn thẳng vào mắt tôi.",
@@ -27,27 +43,27 @@ const CURSED_STORIES = {
       source: "Neural Memory Dump"
     },
     {
-      title: "Thông báo lúc nửa đêm",
-      story: "Điện thoại tôi rung lên với thông báo phát hiện chuyển động từ camera phòng khách. Đoạn clip 5 giây hiển thị một bóng đen đang ngồi gõ bàn phím máy tính của tôi, và khuôn mặt nó quay lại mỉm cười chính là tôi từ 10 năm sau.",
-      source: "Smart Home Breach"
-    },
-    {
-      title: "Vòng lặp vĩnh hằng",
-      story: "Tôi viết một đoạn mã đếm ngược để tự động xóa các file rác. Khi bộ đếm về số 0, toàn bộ đèn trong nhà tắt ngấm và loa thông minh cất tiếng thì thầm: 'Đã xóa bỏ vật thể sống không cần thiết'.",
-      source: "BIOS Corruption"
-    },
-    {
-      title: "Chiếc màn hình phụ",
-      story: "Tôi mua một chiếc màn hình cũ ở chợ đồ cũ về làm màn hình phụ. Mọi cửa sổ kéo sang đó đều đổi màu máu, và mỗi lần tôi tắt máy, một bàn tay in từ phía bên trong mặt kính cào cấu đòi thoát ra.",
-      source: "Hardware Haunting"
-    },
-    {
       title: "404 Soul Not Found",
       story: "Trang web cá nhân của tôi bị hack và hiển thị một đồng hồ đếm ngược sinh mệnh. Tôi tưởng đó là trò đùa cho đến khi nhịp tim của tôi bắt đầu đập chậm dần theo từng giây hiển thị trên màn hình.",
       source: "Dark Web Packet"
     }
   ],
   en: [
+    {
+      title: "The 3:14 AM Pumpkin Soup",
+      story: "As a certified pumpkin lover, I simmered a pot of spiced pumpkin soup before bed. At 3:14 AM, the lid clattered open on its own, and the pumpkin chunks arranged into a grinning Jack-o'-lantern that hissed: 'You have devoured our kind for years... tonight, we feast on you.'",
+      source: "Pumpkin Lover's Kitchen"
+    },
+    {
+      title: "The Immortal Jack-o'-Lantern",
+      story: "I carved a pumpkin for my computer desk three Halloweens ago and it never rotted, remaining unnaturally crisp. Last night when I papercut my finger, its carved mouth widened and slowly lapped up the droplet of blood from the keyboard.",
+      source: "Haunted Harvest"
+    },
+    {
+      title: "IoT Pumpkin Patch Breach",
+      story: "I hooked moisture sensors to my backyard pumpkin patch. At 2:00 AM, my server triggered a critical alert: 'Root hydration spike 300% — pumpkin vines have successfully breached the coffin beneath your floorboards.'",
+      source: "Smart Farm Breach"
+    },
     {
       title: "Process PID 666",
       story: "At 3:14 AM, my unplugged PC fan began screaming at maximum RPM. The monitor flickered to life displaying: 'Thank you for connecting the terminal, I have finally found a vessel.' As I smashed the power cord, the webcam's red LED turned toward me and stayed lit.",
@@ -57,21 +73,6 @@ const CURSED_STORIES = {
       title: "The Phantom Weights",
       story: "I trained a lightweight open-source Gemma model on deleted chat logs of my late roommate. Today, with zero input, the terminal generated a single sentence: 'The basement soil is freezing, why did you bolt the trapdoor from the outside?'",
       source: "Neural Memory Dump"
-    },
-    {
-      title: "Infinite Recursion",
-      story: "The garbage collector script ran at midnight to delete redundant processes. Instead of cleaning memory, the terminal printed: 'Redundant carbon lifeform detected at keyboard coordinates', right as my smart locks engaged.",
-      source: "BIOS Corruption"
-    },
-    {
-      title: "The Reflected Framebuffer",
-      story: "I turned off all the monitors in the server room, but the terminal glass still reflected the empty chair behind me. When I blinked, the reflection stood up and reached into the back of my neck.",
-      source: "Hardware Haunting"
-    },
-    {
-      title: "Ghost in the Motherboard",
-      story: "The diagnostic tool reported 100% CPU usage by an unknown thread named 'SOUL_HARVEST'. I tried to kill -9, but the terminal replied: 'You cannot kill what has already died in these circuits.'",
-      source: "POSIX Horror"
     }
   ]
 };
@@ -105,9 +106,16 @@ export async function summonGhostStory({
   // If using Groq API (Google Gemma 2 or Meta Llama 3)
   if (model === 'gemma2-9b-it' || model === 'llama-3.1-8b-instant') {
     try {
+      let moodSpecifics = "";
+      if (mood === 'pumpkin') {
+        moodSpecifics = lang === 'vi' 
+          ? "Chủ đề: Bí Ngô Ma Ám và Người Mê Bí Đỏ. Viết về những quả bí đỏ bị quỷ ám, súp bí đỏ lúc nửa đêm, hoặc luống bí ngô kinh dị rùng rợn hài hước."
+          : "Theme: Cursed Pumpkin & Pumpkin Lover. Write about demonic Jack-o'-lanterns, haunted pumpkin patches, or sinister pumpkin dishes.";
+      }
+
       const promptLang = lang === 'vi' 
-        ? "Bằng tiếng Việt. Viết một mẩu truyện ma cực ngắn đúng 2 đến 3 câu rùng rợn, bất ngờ, liên quan đến máy tính, phần mềm hoặc công nghệ ma ám nhân dịp Halloween. Không mở bài dông dài, đi thẳng vào câu chuyện rùng rợn."
-        : "In English. Write an ultra-short 2 to 3 sentence spine-chilling horror story about cyber haunted machines, possessed AI, or Halloween tech nightmare. No fluff, just terrifying punchlines.";
+        ? `Bằng tiếng Việt. Viết một mẩu truyện ma cực ngắn đúng 2 đến 3 câu rùng rợn, bất ngờ, liên quan đến máy tính, phần mềm hoặc Halloween. ${moodSpecifics} Không mở bài dông dài, đi thẳng vào câu chuyện rùng rợn.`
+        : `In English. Write an ultra-short 2 to 3 sentence spine-chilling horror story about cyber haunted machines, possessed AI, or Halloween tech nightmare. ${moodSpecifics} No fluff, just terrifying punchlines.`;
 
       const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",

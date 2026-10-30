@@ -15,31 +15,34 @@ export default function Navbar({ onOpenConfig, hasCustomKey, lang, setLang }) {
       <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3">
         {/* Brand / Title */}
         <div className="flex items-center gap-3">
-          <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-red-950/60 border border-red-700/50 shadow-inner">
-            <span className="text-xl animate-pulse">👻</span>
+          <div className="relative flex items-center justify-center w-9 h-9 rounded-lg bg-orange-950/60 border border-orange-700/50 shadow-inner">
+            <span className="text-xl animate-pulse">🎃</span>
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-spooky text-xl text-red-500 tracking-wider glow-red">
+              <span className="font-spooky text-xl text-orange-500 tracking-wider glow-red">
                 GHOST IN THE MACHINE
               </span>
               <span className="hidden sm:inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-purple-950/70 border border-purple-800 text-purple-300">
                 HF26 Week 4
               </span>
+              <span className="hidden md:inline-block text-[10px] font-mono px-2 py-0.5 rounded bg-orange-950/80 border border-orange-600 text-orange-300">
+                🎃 Pumpkin Lover Edition
+              </span>
             </div>
             <p className="text-[11px] font-mono text-gray-500 flex items-center gap-1">
-              <Terminal className="w-3 h-3 text-red-400" />
+              <Terminal className="w-3 h-3 text-orange-400" />
               <span>Domain:</span>
               <a
                 href="https://xuannhj.tech"
                 target="_blank"
                 rel="noreferrer"
-                className="text-red-400 hover:text-red-300 hover:underline font-semibold"
+                className="text-orange-400 hover:text-orange-300 hover:underline font-semibold"
               >
                 xuannhj.tech
               </a>
               <span className="text-gray-600">|</span>
-              <span className="text-gray-400">Open-Source AI Challenge</span>
+              <span className="text-gray-400">By xuannhj (The Pumpkin Connoisseur)</span>
             </p>
           </div>
         </div>

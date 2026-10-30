@@ -45,8 +45,8 @@ export default function Footer({ lang }) {
         <div>© 2026 xuannhj. Open-source under MIT License.</div>
         <div className="flex items-center gap-1">
           <span>Crafted with</span>
-          <Heart className="w-3 h-3 text-red-500 fill-red-500" />
-          <span>for Halloween 2026</span>
+          <span className="text-orange-400">🎃 Pumpkin Passion</span>
+          <span>by xuannhj for Halloween 2026</span>
         </div>
       </div>
     </footer>
