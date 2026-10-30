@@ -3,11 +3,11 @@ import { Volume2, VolumeX, Key, Sparkles, Globe, Terminal } from 'lucide-react';
 import { soundService } from '../services/soundService';
 
 export default function Navbar({ onOpenConfig, hasCustomKey, lang, setLang }) {
-  const [isAudioMuted, setIsAudioMuted] = useState(soundService.isMuted);
+  const [isPlaying, setIsPlaying] = useState(soundService.isPlaying);
 
   const handleAudioToggle = () => {
-    const muted = soundService.toggleMute();
-    setIsAudioMuted(muted);
+    const playing = soundService.toggleMusic();
+    setIsPlaying(playing);
   };
 
   return (
@@ -63,15 +63,15 @@ export default function Navbar({ onOpenConfig, hasCustomKey, lang, setLang }) {
           <button
             onClick={handleAudioToggle}
             className={`px-2.5 py-1.5 rounded-lg border text-xs font-mono transition flex items-center gap-1.5 ${
-              !isAudioMuted
-                ? 'border-red-500 bg-red-950/80 text-red-300 shadow-[0_0_12px_rgba(239,68,68,0.5)] animate-pulse'
+              isPlaying
+                ? 'border-orange-500 bg-orange-950/80 text-orange-300 shadow-[0_0_12px_rgba(249,115,22,0.6)] animate-pulse'
                 : 'border-gray-800 bg-black/40 hover:bg-gray-900 text-gray-400'
             }`}
-            title={isAudioMuted ? 'Bật âm thanh ma quái (Audio On)' : 'Tắt âm thanh (Mute)'}
+            title={isPlaying ? 'Tắt nhạc Halloween' : 'Bật nhạc Halloween'}
           >
-            {!isAudioMuted ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+            {isPlaying ? <Volume2 className="w-3.5 h-3.5 text-orange-400" /> : <VolumeX className="w-3.5 h-3.5" />}
             <span className="hidden md:inline">
-              {!isAudioMuted ? (lang === 'vi' ? 'Nhạc Ma: Bật' : 'Audio: ON') : (lang === 'vi' ? 'Nhạc Ma: Tắt' : 'Audio: OFF')}
+              {isPlaying ? (lang === 'vi' ? 'Nhạc: BẬT 🎃' : 'Music: ON 🎃') : (lang === 'vi' ? 'Nhạc: TẮT' : 'Music: OFF')}
             </span>
           </button>
 

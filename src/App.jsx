@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import SpookyBackground from './components/SpookyBackground';
+import HalloweenMusicPlayer from './components/HalloweenMusicPlayer';
 import GhostTerminal from './components/GhostTerminal';
 import AboutSection from './components/AboutSection';
 import Footer from './components/Footer';
@@ -69,6 +70,9 @@ export default function App() {
             )}
           </p>
         </div>
+
+        {/* Dedicated Spooky Halloween Music Player */}
+        <HalloweenMusicPlayer lang={lang} />
 
         {/* Main Terminal Altar */}
         <GhostTerminal apiKey={apiKey} lang={lang} />
