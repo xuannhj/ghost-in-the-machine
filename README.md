@@ -4,7 +4,7 @@
 ### *Pumpkin Lover Edition by xuannhj*
 
 [![Hacktoberfest 2026](https://img.shields.io/badge/Hacktoberfest-2026%20Week%204-ff6b00.svg?style=for-the-badge&logo=digitalocean&logoColor=white)](https://dev.to/challenges/hacktoberfest-week4-2026-10-26)
-[![DEV Challenge](https://img.shields.io/badge/DEV.to-Challenge%20Submission-0a0a0a.svg?style=for-the-badge&logo=devdotto&logoColor=white)](https://dev.to)
+[![DEV Post](https://img.shields.io/badge/DEV.to-Submission%20Post-0a0a0a.svg?style=for-the-badge&logo=devdotto&logoColor=white)](https://dev.to/xuannhj/ghost-in-the-machine-summoning-cyber-horrors-with-open-source-ai-google-gemma-meta-llama--4bh4)
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-xuannhj.tech-ea580c.svg?style=for-the-badge&logo=vercel&logoColor=white)](https://xuannhj.tech)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
@@ -132,6 +132,7 @@ Open `http://localhost:5173` in your browser.
 ## 🏆 Hacktoberfest 2026 Submission
 
 - **Challenge:** [Hacktoberfest Open-Source AI Challenge Week 4: "Ghost in the Machine"](https://dev.to/challenges/hacktoberfest-week4-2026-10-26)
+- **Official DEV Post:** [Ghost in the Machine — Pumpkin Lover Edition](https://dev.to/xuannhj/ghost-in-the-machine-summoning-cyber-horrors-with-open-source-ai-google-gemma-meta-llama--4bh4)
 - **Tags:** `#devchallenge`, `#hf26challenge`
 - **Prize Category:** *Best Use of a .tech Domain* (`https://xuannhj.tech`)
 - **Author:** [xuannhj](https://github.com/xuannhj)
