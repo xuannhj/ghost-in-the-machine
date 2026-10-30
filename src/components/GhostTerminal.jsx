@@ -13,22 +13,25 @@ import {
   Radio, 
   AlertTriangle 
 } from 'lucide-react';
-import { summonGhostStory, MODELS, MOODS } from '../services/aiService';
+import { summonGhostStory, getCuratedStory, MODELS, MOODS } from '../services/aiService';
 import { soundService } from '../services/soundService';
 
 export default function GhostTerminal({ apiKey, lang }) {
   const [selectedModel, setSelectedModel] = useState('gemma2-9b-it');
   const [selectedMood, setSelectedMood] = useState('pumpkin');
   const [isLoading, setIsLoading] = useState(false);
-  const [storyData, setStoryData] = useState({
-    title: lang === 'vi' ? 'Sẵn Sàng Triệu Hồi...' : 'Awaiting Summoning...',
-    story: lang === 'vi' 
-      ? 'Nhấn nút "Triệu Hồi Truyện Ma" bên dưới để đánh thức linh hồn ẩn sâu trong các trọng số nơ-ron mã nguồn mở (Google Gemma 2 & Meta Llama 3)...' 
-      : 'Click the "Summon Ghost Story" button below to awaken the malevolent spirit trapped within open-source neural weights...',
-    modelUsed: 'Google Gemma 2 / Meta Llama 3',
-    timestamp: '--:--:--',
-    source: 'Quarantine Chamber',
-    isRealAi: false
+  
+  // Initial story directly from the selected mood!
+  const [storyData, setStoryData] = useState(() => {
+    const initial = getCuratedStory('pumpkin', lang);
+    return {
+      title: initial.title,
+      story: initial.story,
+      modelUsed: 'Google Gemma 2 (9B) / Offline Engine',
+      timestamp: new Date().toLocaleTimeString(),
+      source: initial.source,
+      isRealAi: false
+    };
   });
 
   const [displayedText, setDisplayedText] = useState('');
@@ -36,6 +39,82 @@ export default function GhostTerminal({ apiKey, lang }) {
   const [copied, setCopied] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const typingIntervalRef = useRef(null);
+
+  // Theme styling definitions for immediate visual feedback
+  const themeStyles = {
+    pumpkin: {
+      border: 'border-orange-500/80',
+      glow: 'shadow-[0_0_35px_rgba(249,115,22,0.35)]',
+      accentText: 'text-orange-400',
+      titleGlow: 'text-orange-500 drop-shadow-[0_0_12px_rgba(249,115,22,0.8)]',
+      bannerBg: 'bg-orange-950/50 border-orange-800/50 text-orange-300',
+      statusText: '🎃 PUMPKIN LOVER PROTOCOL ACTIVE',
+      icon: '🎃',
+      confetti: ['#f97316', '#ea580c', '#ef4444', '#15803d', '#78350f']
+    },
+    cyber: {
+      border: 'border-emerald-500/80',
+      glow: 'shadow-[0_0_35px_rgba(16,185,129,0.35)]',
+      accentText: 'text-emerald-400',
+      titleGlow: 'text-emerald-400 drop-shadow-[0_0_12px_rgba(16,185,129,0.8)]',
+      bannerBg: 'bg-emerald-950/50 border-emerald-800/50 text-emerald-300',
+      statusText: '👻 CYBER HARDWARE BREACH // PORT 666',
+      icon: '👻',
+      confetti: ['#10b981', '#059669', '#34d399', '#064e3b', '#000000']
+    },
+    halloween: {
+      border: 'border-red-600/80',
+      glow: 'shadow-[0_0_35px_rgba(220,38,38,0.35)]',
+      accentText: 'text-red-400',
+      titleGlow: 'text-red-500 drop-shadow-[0_0_12px_rgba(239,68,68,0.8)]',
+      bannerBg: 'bg-red-950/50 border-red-800/50 text-red-300',
+      statusText: '🕯️ CLASSIC SÉANCE CHAMBER CONNECTED',
+      icon: '🕯️',
+      confetti: ['#ef4444', '#dc2626', '#991b1b', '#7f1d1d', '#000000']
+    },
+    singularity: {
+      border: 'border-purple-600/80',
+      glow: 'shadow-[0_0_35px_rgba(168,85,247,0.35)]',
+      accentText: 'text-purple-400',
+      titleGlow: 'text-purple-400 drop-shadow-[0_0_12px_rgba(168,85,247,0.8)]',
+      bannerBg: 'bg-purple-950/50 border-purple-800/50 text-purple-300',
+      statusText: '🤖 AI NEURAL SINGULARITY AWAKENED',
+      icon: '🤖',
+      confetti: ['#a855f7', '#9333ea', '#7e22ce', '#3b0764', '#000000']
+    }
+  };
+
+  const currentTheme = themeStyles[selectedMood] || themeStyles.pumpkin;
+
+  // When user switches language, refresh story to match language
+  useEffect(() => {
+    const item = getCuratedStory(selectedMood, lang);
+    setStoryData({
+      title: item.title,
+      story: item.story,
+      modelUsed: selectedModel === 'gemma2-9b-it' ? 'Google Gemma 2 (9B)' : 'Meta Llama 3.1 (8B)',
+      timestamp: new Date().toLocaleTimeString(),
+      source: item.source,
+      isRealAi: false
+    });
+  }, [lang]);
+
+  // Handle immediate theme/mood switch with audio & instant typewriter
+  const handleMoodChange = (newMood) => {
+    setSelectedMood(newMood);
+    soundService.playSummonChime();
+
+    // Immediately load story from that specific category
+    const item = getCuratedStory(newMood, lang);
+    setStoryData({
+      title: item.title,
+      story: item.story,
+      modelUsed: selectedModel === 'gemma2-9b-it' ? 'Google Gemma 2 (9B)' : 'Meta Llama 3.1 (8B)',
+      timestamp: new Date().toLocaleTimeString(),
+      source: item.source,
+      isRealAi: false
+    });
+  };
 
   // Typewriter effect
   useEffect(() => {
@@ -46,7 +125,7 @@ export default function GhostTerminal({ apiKey, lang }) {
 
     let currentIndex = 0;
     const fullText = storyData.story;
-    const speed = 25; // ms per char
+    const speed = 20; // ms per char
 
     typingIntervalRef.current = setInterval(() => {
       if (currentIndex < fullText.length) {
@@ -61,7 +140,7 @@ export default function GhostTerminal({ apiKey, lang }) {
     return () => clearInterval(typingIntervalRef.current);
   }, [storyData]);
 
-  // Summon function
+  // Main Summon function
   const handleSummon = async () => {
     if (isLoading) return;
     setIsLoading(true);
@@ -77,16 +156,12 @@ export default function GhostTerminal({ apiKey, lang }) {
 
       setStoryData(result);
 
-      // Trigger spooky blood-red & pumpkin orange confetti burst
-      const confettiColors = selectedMood === 'pumpkin'
-        ? ['#f97316', '#ea580c', '#ef4444', '#15803d', '#78350f']
-        : ['#ef4444', '#7f1d1d', '#a855f7', '#000000'];
-
+      // Trigger theme-specific confetti burst
       confetti({
-        particleCount: 60,
+        particleCount: 65,
         spread: 80,
         origin: { y: 0.75 },
-        colors: confettiColors
+        colors: currentTheme.confetti
       });
     } catch (err) {
       console.error(err);
@@ -125,19 +200,19 @@ export default function GhostTerminal({ apiKey, lang }) {
 
   return (
     <div className="w-full max-w-4xl mx-auto my-6 px-4">
-      {/* Top Banner Alert */}
-      <div className="flex items-center justify-between px-4 py-2 mb-3 bg-red-950/40 border border-red-900/40 rounded-lg text-xs font-mono text-red-300">
+      {/* Top Banner Alert (Dynamically matches theme) */}
+      <div className={`flex items-center justify-between px-4 py-2 mb-3 border rounded-lg text-xs font-mono transition-colors duration-500 ${currentTheme.bannerBg}`}>
         <span className="flex items-center gap-2">
-          <Radio className="w-3.5 h-3.5 text-red-500 animate-ping" />
-          <span>PORT 666: POSSESSED NEURAL CONNECTION ACTIVE</span>
+          <Radio className="w-3.5 h-3.5 text-orange-500 animate-ping" />
+          <span className="font-bold">{currentTheme.statusText}</span>
         </span>
         <span className="hidden sm:inline-block text-gray-400">
           CPU: 66.6°C | PULSE: 133 BPM
         </span>
       </div>
 
-      {/* Main Terminal Window */}
-      <div className="relative bg-[#0b0b12]/95 border-2 border-red-900/60 rounded-2xl shadow-2xl box-glow-red overflow-hidden backdrop-blur-md">
+      {/* Main Terminal Window (Glows & borders match theme) */}
+      <div className={`relative bg-[#0b0b12]/95 border-2 ${currentTheme.border} ${currentTheme.glow} rounded-2xl shadow-2xl overflow-hidden backdrop-blur-md transition-all duration-500`}>
         {/* Terminal Titlebar */}
         <div className="flex items-center justify-between px-4 py-3 bg-[#120f1a] border-b border-red-950/80">
           <div className="flex items-center gap-2">
@@ -145,11 +220,11 @@ export default function GhostTerminal({ apiKey, lang }) {
             <span className="w-3 h-3 rounded-full bg-yellow-600"></span>
             <span className="w-3 h-3 rounded-full bg-green-600"></span>
             <span className="ml-2 text-xs font-mono text-gray-400">
-              root@xuannhj-tech:~# ghost-engine --invoke
+              root@xuannhj-tech:~# ghost-engine --mood {selectedMood}
             </span>
           </div>
 
-          <div className="text-[11px] font-mono text-red-400/80">
+          <div className={`text-[11px] font-mono font-bold ${currentTheme.accentText}`}>
             {storyData.modelUsed}
           </div>
         </div>
@@ -158,12 +233,12 @@ export default function GhostTerminal({ apiKey, lang }) {
         <div className="p-4 bg-black/40 border-b border-red-950/50 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
           {/* Model Selector */}
           <div className="flex items-center gap-2">
-            <Cpu className="w-4 h-4 text-red-400" />
+            <Cpu className="w-4 h-4 text-orange-400" />
             <span className="text-gray-400">{lang === 'vi' ? 'Mô hình:' : 'Model:'}</span>
             <select
               value={selectedModel}
               onChange={(e) => setSelectedModel(e.target.value)}
-              className="bg-[#12121c] border border-red-900/50 text-red-200 rounded px-2.5 py-1 focus:outline-none focus:border-red-500 text-xs font-mono"
+              className="bg-[#12121c] border border-orange-900/50 text-orange-200 rounded px-2.5 py-1.5 focus:outline-none focus:border-orange-500 text-xs font-mono cursor-pointer"
             >
               {MODELS.map((m) => (
                 <option key={m.id} value={m.id}>
@@ -173,14 +248,14 @@ export default function GhostTerminal({ apiKey, lang }) {
             </select>
           </div>
 
-          {/* Mood Selector */}
+          {/* Mood Selector (Changes theme and story instantly!) */}
           <div className="flex items-center gap-2">
-            <Flame className="w-4 h-4 text-orange-400" />
-            <span className="text-gray-400">{lang === 'vi' ? 'Thể loại:' : 'Theme:'}</span>
+            <Flame className="w-4 h-4 text-orange-400 animate-bounce" />
+            <span className="text-gray-400 font-bold">{lang === 'vi' ? 'Thể loại:' : 'Theme:'}</span>
             <select
               value={selectedMood}
-              onChange={(e) => setSelectedMood(e.target.value)}
-              className="bg-[#12121c] border border-red-900/50 text-orange-200 rounded px-2.5 py-1 focus:outline-none focus:border-red-500 text-xs font-mono"
+              onChange={(e) => handleMoodChange(e.target.value)}
+              className="bg-[#18141f] border-2 border-orange-500 text-orange-200 font-bold rounded-lg px-3 py-1.5 focus:outline-none focus:border-orange-400 text-xs font-mono shadow-md cursor-pointer hover:bg-orange-950/40 transition"
             >
               {MOODS.map((m) => (
                 <option key={m.id} value={m.id}>
@@ -196,8 +271,8 @@ export default function GhostTerminal({ apiKey, lang }) {
           <div>
             {/* Story Title */}
             <div className="flex items-center gap-2 mb-3">
-              <Skull className="w-5 h-5 text-red-500 animate-bounce" />
-              <h2 className="text-lg md:text-xl font-bold font-mono text-red-400 glow-red">
+              <span className="text-2xl animate-bounce">{currentTheme.icon}</span>
+              <h2 className={`text-lg md:text-xl font-bold font-mono tracking-wider ${currentTheme.titleGlow}`}>
                 {storyData.title}
               </h2>
             </div>
@@ -206,7 +281,7 @@ export default function GhostTerminal({ apiKey, lang }) {
             <p className="text-base md:text-lg font-mono leading-relaxed text-gray-200 tracking-wide select-text">
               {displayedText}
               {isTyping && (
-                <span className="inline-block w-2.5 h-5 ml-1 bg-red-500 animate-pulse"></span>
+                <span className="inline-block w-2.5 h-5 ml-1 bg-orange-500 animate-pulse"></span>
               )}
             </p>
           </div>
@@ -214,11 +289,13 @@ export default function GhostTerminal({ apiKey, lang }) {
           {/* Story Metadata */}
           <div className="mt-8 pt-4 border-t border-red-950/60 flex flex-wrap items-center justify-between text-[11px] font-mono text-gray-500">
             <div>
-              <span className="text-red-400 font-semibold">{lang === 'vi' ? 'Nguồn gốc:' : 'Origin:'}</span>{' '}
+              <span className={`${currentTheme.accentText} font-semibold`}>
+                {lang === 'vi' ? 'Nguồn gốc:' : 'Origin:'}
+              </span>{' '}
               {storyData.source} | {storyData.timestamp}
             </div>
             <div className="text-gray-400">
-              {storyData.isRealAi ? '⚡ Live Open-Source LLM' : '📜 Cursed Offline Engine'}
+              {storyData.isRealAi ? '⚡ Live Open-Source LLM' : '📜 Theme-Filtered Cursed Engine'}
             </div>
           </div>
         </div>
@@ -229,17 +306,17 @@ export default function GhostTerminal({ apiKey, lang }) {
           <button
             onClick={handleSummon}
             disabled={isLoading}
-            className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-red-600 via-red-800 to-purple-900 hover:from-red-500 hover:to-purple-800 text-white font-bold rounded-xl font-mono text-sm tracking-widest shadow-lg shadow-red-950 transition transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3 border border-red-500/40"
+            className="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-orange-600 via-red-700 to-purple-900 hover:from-orange-500 hover:to-purple-800 text-white font-bold rounded-xl font-mono text-sm tracking-widest shadow-lg shadow-orange-950 transition transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-3 border border-orange-500/50"
           >
             {isLoading ? (
               <>
-                <RefreshCw className="w-4 h-4 animate-spin text-red-300" />
+                <RefreshCw className="w-4 h-4 animate-spin text-orange-200" />
                 <span>{lang === 'vi' ? 'ĐANG KẾT NỐI LINH HỒN...' : 'INVOKING MACHINE SPIRIT...'}</span>
               </>
             ) : (
               <>
                 <Sparkles className="w-4 h-4 text-yellow-300 animate-pulse" />
-                <span>{lang === 'vi' ? 'TRIỆU HỒI TRUYỆN MA' : 'SUMMON GHOST STORY'}</span>
+                <span>{lang === 'vi' ? 'TRIỆU HỒI TRUYỆN MỚI' : 'SUMMON GHOST STORY'}</span>
               </>
             )}
           </button>
@@ -251,7 +328,7 @@ export default function GhostTerminal({ apiKey, lang }) {
               onClick={handleSpeak}
               className={`p-2.5 rounded-lg border text-xs font-mono transition flex items-center gap-1.5 ${
                 isSpeaking 
-                  ? 'border-red-500 bg-red-950/80 text-red-300' 
+                  ? 'border-orange-500 bg-orange-950/80 text-orange-300' 
                   : 'border-red-900/40 bg-black/40 hover:bg-red-950/40 text-gray-300'
               }`}
               title={lang === 'vi' ? 'Đọc bằng giọng ma quái' : 'Read in Cursed Voice'}
@@ -285,4 +362,3 @@ export default function GhostTerminal({ apiKey, lang }) {
     </div>
   );
 }
-
