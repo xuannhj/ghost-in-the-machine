@@ -281,3 +281,4 @@ export default function GhostTerminal({ apiKey, lang }) {
     </div>
   );
 }
+

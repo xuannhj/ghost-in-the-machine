@@ -174,3 +174,4 @@ export async function summonGhostStory({
     isRealAi: false
   };
 }
+
